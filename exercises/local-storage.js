@@ -38,3 +38,53 @@
  */
 
 // Your code goes here...
+const cardContainer = document.getElementsByClassName('cardContainer')
+const cards = document.querySelectorAll('.card')
+
+for(let card of cards) {
+    card.addEventListener('click', (e) => {
+       if(!card.className.includes('red')){
+        card.classList.add('red')
+        addToFavs(card.id)
+       } else {
+        card.classList.remove('red')
+        removeFavs(card.id);
+       }
+    })
+}
+
+
+const setFavs = () => {
+    if(localStorage.getItem('favs')) {
+       const idArr = JSON.parse(localStorage.getItem('favs')).items;
+       for(let id of idArr) {
+          for(let child of cards) {
+             if(child.id === id) {
+                child.classList.add('red');
+             }
+          }
+       }
+    }
+  }
+
+
+const addToFavs = (id) => {
+    if(localStorage.getItem('favs')) {
+        const curVal = JSON.parse(localStorage.getItem('favs'))
+        curVal.items.push(id);
+        localStorage.setItem('favs', JSON.stringify(curVal));
+     } else {
+        localStorage.setItem('favs', JSON.stringify({items:[id]}));
+     }
+}
+
+const removeFavs = (id) => {
+  let curVal = JSON.parse(localStorage.getItem('favs'));
+  const index = curVal.items.indexOf(id);
+  if(index > -1) {curVal.items.splice(index,1)};
+  localStorage.setItem('favs', JSON.stringify(curVal)); 
+  localStorage.getItem('favs');
+}
+
+setFavs();
+

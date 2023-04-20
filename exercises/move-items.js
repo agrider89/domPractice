@@ -13,6 +13,7 @@
 
 // Your code goes here...
 
+const allItems = document.querySelectorAll('.item')
 
 
 /**
@@ -23,7 +24,7 @@
  * */
 
 // Your code goes here
-
+const main = document.getElementById('main');
 
 
 /**
@@ -34,7 +35,7 @@
  */
 
 // Your code goes here
-
+const favs = document.getElementById('favs');
 
 
 /**
@@ -47,7 +48,17 @@
  */
 
 // Your code goes here
-
+const updateCollections = (id,direction) => {
+    const icons = id.children[0].classList
+    const classArr = ['fa-heart-circle-plus','fa-heart-crack']
+  if(direction === 'main') {
+    icons.replace(classArr[0], classArr[1])
+    favs.append(id)
+  } else {
+    icons.replace(classArr[1], classArr[0])
+    main.append(id)
+  }
+}
 
 
 /**
@@ -65,5 +76,13 @@
  */
 
 // Your code goes here...
+
+for(let item of allItems) {
+    item.addEventListener('click', (e) => {
+        const target = e.target
+        const container = e.target.parentElement.id
+        updateCollections(target, container)
+    })
+}
 
 
