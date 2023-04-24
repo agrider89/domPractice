@@ -38,21 +38,40 @@
  */
 
 // Your code goes here...
-const cardContainer = document.getElementsByClassName('cardContainer')
+const body = document.querySelector('body')
+const container = body.children[1]
 const cards = document.querySelectorAll('.card')
 
-for(let card of cards) {
-    card.addEventListener('click', (e) => {
-       if(!card.className.includes('red')){
-        card.classList.add('red')
-        addToFavs(card.id)
-       } else {
-        card.classList.remove('red')
-        removeFavs(card.id);
-       }
-    })
+// EventListeners on each card...
+// for(let card of cards) {
+//     card.addEventListener('click', (e) => {
+//        if(!card.className.includes('red')){
+//         card.classList.add('red')
+//         addToFavs(card.id)
+//        } else {
+//         card.classList.remove('red')
+//         removeFavs(card.id);
+//        }
+//     })
+// }
+
+
+const callBack = (e) => {
+   const item = e.target;
+   const arr = Array.from(item.classList).includes('card')
+   if (arr){
+      if(!item.className.includes('red')){
+         item.classList.add('red')
+         addToFavs(item.id)
+      } else {
+         item.classList.remove('red')
+         removeFavs(item.id)
+      } 
+   }
 }
 
+
+container.addEventListener('click',callBack)
 
 const setFavs = () => {
     if(localStorage.getItem('favs')) {
@@ -61,11 +80,11 @@ const setFavs = () => {
           for(let child of cards) {
              if(child.id === id) {
                 child.classList.add('red');
-             }
-          }
-       }
-    }
-  }
+            }
+         }
+      }
+   }
+}
 
 
 const addToFavs = (id) => {
@@ -87,4 +106,3 @@ const removeFavs = (id) => {
 }
 
 setFavs();
-
